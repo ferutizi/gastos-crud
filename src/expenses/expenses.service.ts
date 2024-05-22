@@ -12,4 +12,12 @@ export class ExpensesService {
     const newExpense = this.expenseRepository.create(expense)
     return this.expenseRepository.save(newExpense)
   }
+
+  getExpenses() {
+    return this.expenseRepository.find()
+  }
+
+  getExpense() {
+    return this.expenseRepository.find()
+  }
 }
