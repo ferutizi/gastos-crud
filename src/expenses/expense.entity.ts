@@ -14,4 +14,7 @@ export class Expense {
 
   @Column()
   section: string
+
+  @Column()
+  value: number
 }
