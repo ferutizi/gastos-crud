@@ -17,7 +17,13 @@ export class ExpensesService {
     return this.expenseRepository.find()
   }
 
-  getExpense() {
-    return this.expenseRepository.find()
+  getExpenseById(id: number) {
+    return this.expenseRepository.findOne({
+      where: { id }
+    })
+  }
+
+  deleteExpense(id: number) {
+    return this.expenseRepository.delete({ id })
   }
 }
