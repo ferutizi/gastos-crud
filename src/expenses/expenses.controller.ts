@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, ParseIntPipe, Delete } from '@nestjs/common';
 import { CreateExpenseDto } from 'src/dto/createExpense.dto';
 import { ExpensesService } from './expenses.service';
 import { Expense } from './expense.entity';
@@ -16,5 +16,15 @@ export class ExpensesController {
   @Get()
   getExpenses(): Promise<Expense[]> {
     return this.expensesService.getExpenses()
+  }
+
+  @Get(':id')
+  getExpenseById(@Param('id', ParseIntPipe) id: number): Promise<Expense> {
+    return this.expensesService.getExpenseById(id)
+  }
+
+  @Delete(':id')
+  deleteExpense(@Param('id', ParseIntPipe) id: number) {
+    return this.expensesService.deleteExpense(id)
   }
 }
