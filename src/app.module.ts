@@ -1,4 +1,3 @@
-import { USER, PASSWORD, PORT } from './data/constants';
 import { Module } from '@nestjs/common';
 import { ExpensesModule } from './expenses/expenses.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -7,10 +6,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      username: USER.USER,
-      password: PASSWORD.PASSWORD,
+      username: 'postgres',
+      password: '123',
       host: 'localhost',
-      port: PORT.PORT,
+      port: 5432,
       database: 'expensesdb',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
@@ -18,4 +17,4 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     ExpensesModule
   ],
 })
-export class AppModule {}
+export class AppModule { }
