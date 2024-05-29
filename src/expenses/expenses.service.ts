@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Expense } from './expense.entity';
 import { Repository } from 'typeorm';
@@ -18,17 +18,38 @@ export class ExpensesService {
     return this.expenseRepository.find()
   }
 
-  getExpenseById(id: number) {
-    return this.expenseRepository.findOne({
+  async getExpenseById(id: number) {
+    const expenseFound = await this.expenseRepository.findOne({
       where: { id }
     })
+
+    if (!expenseFound) {
+      return new HttpException('Expense not found', HttpStatus.NOT_FOUND)
+    }
+
+    return expenseFound
   }
 
-  deleteExpense(id: number) {
+  async deleteExpense(id: number) {
+    const result = await this.expenseRepository.delete({ id })
+
+    if (result.affected === 0) {
+      return new HttpException('Expense not found', HttpStatus.NOT_FOUND)
+    }
+
     return this.expenseRepository.delete({ id })
   }
 
-  updateExpense(id: number, expense: updateExpenseDto) {
-    return this.expenseRepository.update({ id }, expense)
+  async updateExpense(id: number, expense: updateExpenseDto) {
+    const expenseFound = await this.expenseRepository.findOne({
+      where: { id }
+    })
+
+    if (!expenseFound) {
+      return new HttpException('Expense not found', HttpStatus.NOT_FOUND)
+    }
+
+    const updateExpense = Object.assign(expenseFound, expense)
+    return this.expenseRepository.save(updateExpense)
   }
 }
