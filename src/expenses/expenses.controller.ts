@@ -20,7 +20,7 @@ export class ExpensesController {
   }
 
   @Get(':id')
-  getExpenseById(@Param('id', ParseIntPipe) id: number): Promise<Expense> {
+  getExpenseById(@Param('id', ParseIntPipe) id: number) {
     return this.expensesService.getExpenseById(id)
   }
 
