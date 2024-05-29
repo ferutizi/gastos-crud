@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Expense } from './expense.entity';
 import { Repository } from 'typeorm';
 import { CreateExpenseDto } from 'src/dto/createExpense.dto';
+import { updateExpenseDto } from 'src/dto/updateExpense.dto';
 
 @Injectable()
 export class ExpensesService {
@@ -25,5 +26,9 @@ export class ExpensesService {
 
   deleteExpense(id: number) {
     return this.expenseRepository.delete({ id })
+  }
+
+  updateExpense(id: number, expense: updateExpenseDto) {
+    return this.expenseRepository.update({ id }, expense)
   }
 }
